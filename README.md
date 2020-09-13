@@ -2,32 +2,31 @@
 promised-ldap
 =============
 
-This library is a quick-n-dirty shim over [ldapjs](https://github.com/mcavage/node-ldapjs) to add
-promises and easier authentication.  It currently only supports the client interface.
+Esta biblioteca é um shim rápido e sujo sobre [ldapjs] (https://github.com/mcavage/node-ldapjs) para adicionar
+promessas e autenticação mais fácil. Atualmente, ele suporta apenas a interface do cliente.
 
-Usage
+Uso
 -----
 
-To create a new client:
+Para criar um novo cliente:
 
 ```js
 var LdapClient = require('promised-ldap');
 var client = new LdapClient({url: 'ldap://127.0.0.1:389'});
 ```
 
-The options argument to the constructor is identical to the options argument used in `ldapjs` for
-`ldap.createClient`.  Please see the docs [here](http://ldapjs.org/client.html).
+O argumento de opções para o construtor é idêntico ao argumento de opções usado em `ldapjs` para
+`ldap.createClient`.  Por favor, veja os documentos [aqui](http://ldapjs.org/client.html).
 
-It supports the other methods documented there as well, except that instead of taking a callback, the methods
-return a promise.  E.g.:
+Ele suporta os outros métodos documentados lá também, exceto que, em vez de receber um retorno de chamada, os métodos
+devolver uma promessa.  E.g.:
 
 ```js
 client.bind('username', 'password').then(function () { ... });
 ```
 
-The `search` method in `ldapjs` is now accessible (in promisified form) by `client._search`.  I
-have provided a method `client.search` with similar behaviour as the original but an arguably
-easier API.  E.g.:
+O método `search` em` ldapjs` agora está acessível (na forma prometida) por `client._search`. Eu forneci um método `client.search` 
+com comportamento semelhante ao original, mas com uma API mais fácil.  E.g.:
 
 ```js
 client.search(base, options).then(function (result) {
@@ -41,8 +40,8 @@ client.search(base, options).then(function (result) {
 });
 ```
 
-Let's face it, the reason why you're messing about with LDAP is probably to add LDAP authentication
-to your app, so I've added a couple of helper method for this:
+Vamos enfrentá-lo, o motivo pelo qual você está mexendo com o LDAP é provavelmente para adicionar autenticação 
+LDAP ao seu aplicativo, então adicionei alguns métodos auxiliares para isso:
 
 ```js
 client.authenticate(base, cn, password).then(function (result) {
@@ -51,11 +50,11 @@ client.authenticate(base, cn, password).then(function (result) {
 });
 ```
 
-This basically does a `bind` using the supplied credentials, and if successful, does a `search` for
-the specified user and returns that.
+Isso basicamente faz um `bind` usando as credenciais fornecidas e, se for bem-sucedido, faz uma` search` para 
+o usuário especificado e retorna isso....
 
-If all you really wanted was the user's name, email address, and list of unqualified groups, we
-can do that too:
+Se tudo o que você realmente deseja é o nome do usuário, endereço de e-mail e lista de grupos não qualificados, 
+também podemos fazer isso:
 
 ```js
 client.authenticateUser(base, cn, password).then(function (result) {
@@ -71,4 +70,4 @@ client.authenticateUser(base, cn, password).then(function (result) {
 });
 ```
 
-Pull requests and suggestions are welcome!
+Solicitações e sugestões de pull são bem-vindas!
